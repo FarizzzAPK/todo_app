@@ -58,106 +58,107 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
           ),
         ),
       ),
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 16, bottom: 32, left: 16, right: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 8),
-              const Text(
-                "Task Name",
-                style: TextStyle(
-                  color: Color(0xffFFFCFC),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              const SizedBox(height: 16),
-              CustomFormField(
-                max: 1,
-                minLines: 1,
-                controller: taskNameController,
-                hintText: "Enter Task Name",
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return 'Please enter task name';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                "Task Description",
-                style: TextStyle(
-                  color: Color(0xffFFFCFC),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              const SizedBox(height: 16),
-              CustomFormField(
-                max: 1,
-                minLines: 1,
-                controller: taskDescriptionController,
-                hintText: "Enter Task Description",
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return 'Please enter task description';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 32),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "High Priority ",
-                    style: TextStyle(
-                      color: Color(0xffFFFCFC),
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  Switch(
-                    value: isSwitched,
-                    onChanged: (value) {
-                      setState(() {
-                        isSwitched = value;
-                      });
-                    },
-                    activeColor: Color(0xffFFFCFC),
-                    activeTrackColor: Color(0xff15B86C),
-                    inactiveThumbColor: Colors.grey,
-                    inactiveTrackColor: Colors.grey[700],
-                  ),
-                ],
-              ),
-              const Spacer(),
-              SizedBox(
-                width: double.infinity,
-                height: 48,
-                child: ElevatedButton(
-                  onPressed: addtask,
-                    style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xff15B86C),
-                    foregroundColor: const Color(0xffFFFCFC),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                  ),
-                  child: const Text(
-                    "Add Task",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 16, bottom: 32, left: 16, right: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 8),
+                const Text(
+                  "Task Name",
+                  style: TextStyle(
+                    color: Color(0xffFFFCFC),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 16),
+                CustomFormField(
+                  max: 1,
+                  minLines: 1,
+                  controller: taskNameController,
+                  hintText: "Enter Task Name",
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Please enter task name';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  "Task Description",
+                  style: TextStyle(
+                    color: Color(0xffFFFCFC),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                CustomFormField(
+                  max: 1,
+                  minLines: 1,
+                  controller: taskDescriptionController,
+                  hintText: "Enter Task Description",
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Please enter task description';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 32),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "High Priority ",
+                      style: TextStyle(
+                        color: Color(0xffFFFCFC),
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    Switch(
+                      value: isSwitched,
+                      onChanged: (value) {
+                        setState(() {
+                          isSwitched = value;
+                        });
+                      },
+                      activeColor: Color(0xffFFFCFC),
+                      activeTrackColor: Color(0xff15B86C),
+                      inactiveThumbColor: Colors.grey,
+                      inactiveTrackColor: Colors.grey[700],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  height: 48,
+                  child: ElevatedButton(
+                    onPressed: addtask,
+                      style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xff15B86C),
+                      foregroundColor: const Color(0xffFFFCFC),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                    ),
+                    child: const Text(
+                      "Add Task",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

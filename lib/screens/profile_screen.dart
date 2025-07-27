@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/Customs/custom_form_field.dart';
+import 'package:todo_app/Local_storage/shared_pref_helper.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -47,6 +48,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     if(_formKey.currentState!.validate()){
+                      SharedPrefHelper.saveUserName(nameController.text);
+                      SharedPrefHelper.saveUserQuote(motivationController.text);
                     }
                   },
                   style: ElevatedButton.styleFrom(

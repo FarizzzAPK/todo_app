@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_app/Local_storage/shared_pref_helper.dart';
 import 'package:todo_app/screens/nav_screen.dart';
 import 'package:todo_app/screens/welcome_screen.dart';
 
@@ -16,28 +17,19 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _checkIfFirstTime();
+    _navigate();
   }
 
-  Future<void> _checkIfFirstTime() async {
-    final prefs = await SharedPreferences.getInstance();
-    final isFirst = prefs.getBool('IsFirst') ?? true;
-
-    // لو أول مرة، نعرض Welcome ونخزن إنه مش أول مرة
-    if (isFirst) {
-      await prefs.setBool('IsFirst', false);
-      Timer(const Duration(seconds: 3), () {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) =>  WelcomeScreen()),
-        );
-      });
-    } else {
-      Timer(const Duration(seconds: 3), () {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const NavScreen()),
-        );
-      });
-    }
+  void _navigate() async {
+    bool isFirst = await SharedPrefHelper.isFirstTime();
+    Timer(const Duration(seconds: 3), () {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) =>
+          isFirst ?  WelcomeScreen() : const NavScreen(),
+        ),
+      );
+    });
   }
 
   @override

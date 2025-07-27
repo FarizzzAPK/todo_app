@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../Local_storage/shared_pref_helper.dart';
 import 'home_screen.dart';
 import 'nav_screen.dart';
 
@@ -8,11 +9,6 @@ class WelcomeScreen extends StatelessWidget {
   WelcomeScreen({super.key});
 TextEditingController nameController = TextEditingController();
    final _formKey = GlobalKey<FormState>();
-
-  Future<void> saveUsername(String username) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('username', username);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +119,7 @@ TextEditingController nameController = TextEditingController();
                       onPressed: () {
                         if(_formKey.currentState!.validate()){
                           Navigator.of(context).push(MaterialPageRoute(builder: (context) => NavScreen(),));
-                          saveUsername(nameController.text);
+                          SharedPrefHelper.saveUserName(nameController.text);
                         }
                       },
                       style: ElevatedButton.styleFrom(

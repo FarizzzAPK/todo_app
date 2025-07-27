@@ -15,11 +15,21 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String? username;
+  String? motivationQuote;
+
 
   @override
   void initState() {
     super.initState();
+    getUserMotivationQuote();
     getUsernameFromPrefs();
+  }
+
+  Future<void> getUserMotivationQuote() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      motivationQuote = prefs.getString('userquote');
+    });
   }
 
   Future<void> getUsernameFromPrefs() async {
@@ -28,6 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
       username = prefs.getString('username');
     });
   }
+
+
 
   Future<void> _goToAddTask() async {
     final TaskModel? newTask = await Navigator.push(
@@ -67,9 +79,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white,
                         ),
                       ),
-                      Text(
-                        "One task at a time. One step closer.",
-                        style: TextStyle(
+                      Text(motivationQuote ?? "One task at a time. One step closer.",
+
+        style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 16,
                           color: Colors.white,
