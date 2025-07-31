@@ -15,29 +15,30 @@ class _ToDoScreenState extends State<ToDoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xff181818),
-      appBar: AppBar(
-        leadingWidth: 35,
-        foregroundColor: Colors.white,
-        backgroundColor: Color(0xff181818),
-        title: Text("To Do List", style: TextStyle(color: Colors.white)),
-      ),
+
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 16),
+            SizedBox(height: 24,
+        ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Text("To Do List", style: TextStyle(color: Colors.white,fontSize: 24)),
+          ),
             Expanded(
-              child: TaskModel.ToDoTask.isEmpty
+              child: TaskModel.toDoTasks.isEmpty
                   ? Center(
                       child: Text("لا توجد مهام",
                           style: TextStyle(color: Colors.white)))
                   : ListView.builder(
-                      itemCount: TaskModel.ToDoTask.length,
+                      itemCount: TaskModel.toDoTasks.length,
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: TaskContainer(
-                            task: TaskModel.ToDoTask[index],
+                            task: TaskModel.toDoTasks[index],
                             onChanged: () => setState(() {}),
                           ),
                         );

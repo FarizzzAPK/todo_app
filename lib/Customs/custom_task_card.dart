@@ -4,11 +4,13 @@ import '../Models/task_model.dart';
 class CustomTaskCard extends StatefulWidget {
   final TaskModel task;
   final VoidCallback? onChanged;
+  final VoidCallback? onTaskDeleted; // New callback for deletion
 
   const CustomTaskCard({
     super.key,
     required this.task,
     this.onChanged,
+    this.onTaskDeleted,
   });
 
   @override
@@ -23,8 +25,8 @@ class _CustomTaskCardState extends State<CustomTaskCard> {
     super.initState();
     isDone = widget.task.isDone;
 
-    if (isDone && !TaskModel.CompletedTask.contains(widget.task)) {
-      TaskModel.CompletedTask.add(widget.task);
+    if (isDone && !TaskModel.completedTasks.contains(widget.task)) {
+      TaskModel.completedTasks.add(widget.task);
     }
   }
 
@@ -33,26 +35,15 @@ class _CustomTaskCardState extends State<CustomTaskCard> {
       isDone = !isDone;
       widget.task.isDone = isDone;
 
-      if (isDone) {
-        if (!TaskModel.CompletedTask.contains(widget.task)) {
-          TaskModel.CompletedTask.add(widget.task);
-        }
-        TaskModel.ToDoTask.remove(widget.task);
-      } else {
-        TaskModel.CompletedTask.remove(widget.task);
-        if (!TaskModel.ToDoTask.contains(widget.task)) {
-          TaskModel.ToDoTask.add(widget.task);
-        }
-      }
       widget.onChanged?.call();
+      TaskModel.saveTasks();
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 12),
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
       child: Row(
         children: [
           Checkbox(
@@ -75,8 +66,44 @@ class _CustomTaskCardState extends State<CustomTaskCard> {
               ),
             ),
           ),
-          if (widget.task.isPriority)
-            const Icon(Icons.priority_high, color: Color(0xff15B86C), size: 20),
+          IconButton(
+            icon: const Icon(Icons.more_vert, color: Color(0xffA0A0A0)),
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                backgroundColor: Colors.white,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                ),
+                builder: (context) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ListTile(
+                        leading: const Icon(Icons.edit, color: Colors.blue),
+                        title: const Text('Edit Task'),
+                        onTap: () {
+                          Navigator.pop(context);
+                          // TODO: Implement edit functionality
+                        },
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.delete, color: Colors.red),
+                        title: const Text('Delete Task'),
+                        onTap: () async {
+                          Navigator.pop(context);
+                          bool deleted = await TaskModel.deleteTaskById(widget.task.id);
+                          if (deleted) {
+                            widget.onTaskDeleted?.call(); // Notify parent
+                          }
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
         ],
       ),
     );

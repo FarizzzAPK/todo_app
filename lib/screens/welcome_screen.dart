@@ -23,6 +23,9 @@ TextEditingController nameController = TextEditingController();
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(
+              height: 150,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

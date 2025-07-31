@@ -24,14 +24,8 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
       );
 
       TaskModel.allTasks.add(newTask);
-
-      if (newTask.isPriority) {
-        TaskModel.PriorityTask.add(newTask);
-      } else {
-        TaskModel.ToDoTask.add(newTask);
-      }
-
-      Navigator.pop(context,newTask);
+      TaskModel.saveTasks();
+      Navigator.pop(context, newTask);
     }
   }
 
@@ -78,7 +72,6 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                 const SizedBox(height: 16),
                 CustomFormField(
                   max: 1,
-                  minLines: 1,
                   controller: taskNameController,
                   hintText: "Enter Task Name",
                   validator: (value) {
@@ -99,8 +92,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                 ),
                 const SizedBox(height: 16),
                 CustomFormField(
-                  max: 1,
-                  minLines: 1,
+                  max: 4,
                   controller: taskDescriptionController,
                   hintText: "Enter Task Description",
                   validator: (value) {
@@ -136,6 +128,8 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 16),
+
                 SizedBox(
                   width: double.infinity,
                   height: 48,

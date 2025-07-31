@@ -6,7 +6,6 @@ class CustomFormField extends StatelessWidget {
   final FormFieldValidator<String>? validator;
   final TextInputType? keyboardType;
   final bool obscureText;
-  final double minLines;
   final double max;
 
 
@@ -17,7 +16,6 @@ class CustomFormField extends StatelessWidget {
     this.validator,
     this.keyboardType,
     this.obscureText = false,
-    required this.minLines,
     required this.max,
 
   });
